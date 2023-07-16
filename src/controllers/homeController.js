@@ -55,6 +55,27 @@ let putCRUD = async (req, res) => {
     });
 }
 
+let predelCRUD = async (req, res) => {
+    let userId = req.query.id;
+    if (userId) {
+        let userData = await CRUDservice.getUserInfoById(userId);
+        console.log(userData);
+        return res.render('./test/predelCRUD.ejs', {
+            userData: userData
+        })
+    } else {
+        return res.send('User not exist!');
+    }
+}
+
+let deleteCRUD = async (req, res) => {
+    let data = req.body;
+    let allUsers = await CRUDservice.deleteUserData(data);
+    return res.render('./test/displayCRUD.ejs', {
+        dataTable: allUsers
+    });
+}
+
 module.exports = {
     getHomePage: getHomePage,
     getAboutPage: getAboutPage,
@@ -63,4 +84,6 @@ module.exports = {
     displayCRUD: displayCRUD,
     editCRUD: editCRUD,
     putCRUD: putCRUD,
+    predelCRUD: predelCRUD,
+    deleteCRUD: deleteCRUD
 }
